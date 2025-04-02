@@ -3,7 +3,7 @@ import hmac
 import hashlib
 import json
 from secret_key import SECRET_KEY
-""""
+"""
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HEY TEAM!!!
 
@@ -28,8 +28,6 @@ XU if you need help with UI also let me know
 
 Thank you Let me know if you run into anything!
 
-PS: for testing when in putting file they jshould be formated this way doesnt have to look exctly like mine tho 
-C:\Users\18628\OneDrive\Desktop\test this is all subjective to directory you are using, need to improve the error handeling i tried below  i will work on
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 """
 
@@ -76,15 +74,15 @@ def write_hashes_to_json(file_hashes, output_dir):
 # Just a little helper to clean up paths (sometimes python does like when you input path certain way tried fix that so no confusion)
 """"
 -------------------------------------------------------------------------------------------------------------------
-xu this function is not really needed i thought it can maybe help with the UI but if we dont need it we can delete it let me know if any question 
+xu this function "clean_path" is not really needed i thought it can maybe help with the UI but if we dont need it we can delete it let me know if any question 
+it helps keep the file path the same structure everytime you put one in
 -----------------------------------------------------------------------------------------------------------------------------------------------
 """
 def clean_path(path):
-    return os.path.normpath(path.strip().replace('\\', '/'))
+    return os.path.normpath(path.strip().replace('"', '').replace("'", '').replace('\\', '/'))
 
-def main():
-#error handeling needs work will fix 
-    try:
+def main(): 
+    
         input_path = clean_path(input("Enter the path to the file or directory you want to hash: "))
         output_dir = clean_path(input("Enter the path where you want to save the hash output: "))
 
@@ -98,8 +96,7 @@ def main():
         file_hashes = generate_file_hashes(input_path)
         write_hashes_to_json(file_hashes, output_dir)
 
-    except Exception as e:
-        print(f"\n nAn unexpected error occurred: {e}")
+    
 
 if __name__ == '__main__':
     main()

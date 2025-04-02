@@ -1,9 +1,10 @@
 import os
 import base64
 import json
-
+# Get the folder where *this script* is located (Program 1)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # This is the file that stores our secret key so it's persistent between runs
-KEY_FILE = "hmac_key.json"
+KEY_FILE = os.path.join(BASE_DIR,"hmac_key.json")
 KEY_LENGTH = 32  # (256-bit key) 32 bytes = 256 bits = strong key for HMAC
 
 # This function creates a new random key and encodes it in base64 (so it's easy to store/share)
@@ -21,7 +22,7 @@ def save_key(encoded_key):
 # If not, it generates one and saves it
 def load_key():
     if not os.path.exists(KEY_FILE):
-        print("🔐 No existing key found. Generating new key...")
+        print("No existing key found. Generating new key...")
         encoded_key = generate_key()
         save_key(encoded_key)
         return encoded_key
@@ -37,7 +38,7 @@ def maybe_regenerate():
     if choice == 'y':
         new_key = generate_key()
         save_key(new_key)
-        print(f"\n✅ New key generated:\n{new_key}\n")
+        print(f"\nNew key generated:\n{new_key}\n ")
         return new_key
     else:
         return load_key()
